@@ -1,0 +1,66 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f0f0; /* gris claro del fondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Panel contenedor */
+  .container {
+    background: #e5e5e5; /* gris más fuerte */
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden; /* para que el header quede unido al panel */
+  }
+  
+  /* Header del panel */
+  .header {
+    background: #4a4a4a; /* gris oscuro */
+    color: white;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  /* Contenido del panel */
+  .content {
+    padding: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  
+  input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    margin-top: 15px;
+    padding: 8px 12px;
+    background: #4a4a4a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background: #333;
+  }
+  
+  #message {
+    margin-top: 15px;
+    font-weight: bold;
+  }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSJE_5IV8-Práctica Javascript</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">Validador DNI</div>
+    <div class="content">
+      <form id="dniForm">
+        <label for="dniNumber">Número de DNI:</label>
+        <input type="text" id="dniNumber" maxlength="8">
+
+        <label for="dniLetter">Letra:</label>
+        <input type="text" id="dniLetter" maxlength="1">
+
+        <button type="submit">Comprobar</button>
+      </form>
+      <p id="message"></p>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>

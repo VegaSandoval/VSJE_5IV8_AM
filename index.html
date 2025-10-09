@@ -3,25 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VSJE_5IV8-Práctica Javascript</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Ejemplo de Manejador de Versiones</title>
+    <link rel="stylesheet" href="./CSS/Style.css">
 </head>
 <body>
-  <div class="container">
-    <div class="header">Validador DNI</div>
-    <div class="content">
-      <form id="dniForm">
-        <label for="dniNumber">Número de DNI:</label>
-        <input type="text" id="dniNumber" maxlength="8">
 
-        <label for="dniLetter">Letra:</label>
-        <input type="text" id="dniLetter" maxlength="1">
+    <header>Vega Sandoval Julio Emiliano</header>
 
-        <button type="submit">Comprobar</button>
-      </form>
-      <p id="message"></p>
+    <p class="subtitulo">Portafolio de evidencias para la asignatura de AP</p>
+    
+    <div class="linea"></div>
+    
+    <div class="contenedor-tabla">
+        <table>
+            <tr>
+                <th>No. Práctica</th>
+                <th>Nombre</th>
+                <th>Vista Previa / Descripción</th>
+            </tr>
+
+            <tr>
+                <td>01</td>
+                <td><a href="01Validar/validar.html">Validacion</a></td>
+                <td>
+                    <div class="tooltip">
+                        <img src="img/figma.png" alt="Vista previa Estilos" class="miniatura">
+                        <span class="tooltip-text">Este es mi formato para validar</span>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>02</td>
+                <td><a href="01Curriculo/curriculo.html">Calculadora</a></td>
+                <td>
+                    <div class="tooltip">
+                        <img src="img/curriculum.png" alt="Vista previa Curriculum" class="miniatura">
+                        <span class="tooltip-text">Esta es mi calculadora</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
-  </div>
-  <script src="js/script.js"></script>
+
+    <div class="linea"></div>
+
+    <footer>
+        © 2025 - Portafolio de Julio Emiliano
+    </footer>
 </body>
 </html>
