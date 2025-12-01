@@ -9,6 +9,7 @@ import {
   TextInput,
   Alert,
   SafeAreaView,
+  ScrollView, 
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Sharing from "expo-sharing";
@@ -183,89 +184,91 @@ const analyzeQrData = (raw) => {
     );
   }
 
-  // ---- Pantalla de ESCÁNER QR ----
-  if (showQr) {
-    return (
-      <SafeAreaView style={styles.cameraContainer}>
-        <CameraView
-          style={styles.camera}
-          facing="back"
-          barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
-          onBarcodeScanned={qrScanned ? undefined : handleQrScanned}
-        />
+// ---- Pantalla de ESCÁNER QR ----
+if (showQr) {
+  return (
+    <SafeAreaView style={styles.cameraContainer}>
+      <CameraView
+        style={styles.camera}
+        facing="back"
+        barcodeScannerSettings={{ barcodeTypes: ["qr"] }}
+        onBarcodeScanned={qrScanned ? undefined : handleQrScanned}
+      />
 
-        <View style={{ paddingHorizontal: 16 }}>
-          {qrRaw && (
-            <View style={styles.resultBox}>
-              <Text style={styles.resultTitle}>Contenido del QR:</Text>
-              <Text style={styles.resultText}>{qrRaw}</Text>
-            </View>
-          )}
+      <ScrollView
+        style={styles.qrScroll}
+        contentContainerStyle={styles.qrScrollContent}
+      >
+        {qrRaw && (
+          <View style={styles.resultBox}>
+            <Text style={styles.resultTitle}>Contenido del QR:</Text>
+            <Text style={styles.resultText}>{qrRaw}</Text>
+          </View>
+        )}
 
-          {qrAnalysis && (
-            <View
-              style={[
-                styles.analysisBox,
-                qrAnalysis.verdict === "safe"
-                  ? styles.analysisSafe
-                  : qrAnalysis.verdict === "warning"
-                  ? styles.analysisWarning
-                  : styles.analysisNeutral,
-              ]}
-            >
-              <Text style={styles.analysisTitle}>
-                {qrAnalysis.verdict === "safe"
-                  ? "Enlace seguro"
-                  : qrAnalysis.verdict === "warning"
-                  ? "Posible enlace sospechoso"
-                  : "Contenido no reconocido como enlace"}
+        {qrAnalysis && (
+          <View
+            style={[
+              styles.analysisBox,
+              qrAnalysis.verdict === "safe"
+                ? styles.analysisSafe
+                : qrAnalysis.verdict === "warning"
+                ? styles.analysisWarning
+                : styles.analysisNeutral,
+            ]}
+          >
+            <Text style={styles.analysisTitle}>
+              {qrAnalysis.verdict === "safe"
+                ? "Enlace seguro"
+                : qrAnalysis.verdict === "warning"
+                ? "Posible enlace sospechoso"
+                : "Contenido no reconocido como enlace"}
+            </Text>
+
+            <Text style={styles.analysisText}>{qrAnalysis.description}</Text>
+
+            {qrAnalysis.domain && (
+              <Text style={styles.analysisDomain}>
+                Dominio: {qrAnalysis.domain}
               </Text>
+            )}
 
-              <Text style={styles.analysisText}>
-                {qrAnalysis.description}
-              </Text>
+            <Text style={styles.analysisHint}>
+              El enlace no se abrirá automáticamente. Revisa esta evaluación
+              antes de decidir qué hacer.
+            </Text>
+          </View>
+        )}
 
-              {qrAnalysis.domain && (
-                <Text style={styles.analysisDomain}>
-                  Dominio: {qrAnalysis.domain}
-                </Text>
-              )}
-
-              <Text style={styles.analysisHint}>
-                El enlace no se abrirá automáticamente. Revisa esta evaluación
-                antes de decidir qué hacer.
-              </Text>
-            </View>
-          )}
-
-          {qrScanned && (
-            <TouchableOpacity
-              style={[styles.btnAccept, { marginTop: 10 }]}
-              onPress={() => {
-                setQrScanned(false);
-                setQrRaw(null);
-                setQrAnalysis(null);
-              }}
-            >
-              <Text style={styles.btnAcceptText}>Volver a escanear</Text>
-            </TouchableOpacity>
-          )}
-
+        {qrScanned && (
           <TouchableOpacity
-            style={[styles.btnAccept, { backgroundColor: "#333", marginTop: 10 }]}
+            style={[styles.btnAccept, { marginTop: 10 }]}
             onPress={() => {
-              setShowQr(false);
               setQrScanned(false);
               setQrRaw(null);
               setQrAnalysis(null);
             }}
           >
-            <Text style={styles.btnAcceptText}>Cerrar</Text>
+            <Text style={styles.btnAcceptText}>Volver a escanear</Text>
           </TouchableOpacity>
-        </View>
-      </SafeAreaView>
-    );
-  }
+        )}
+
+        <TouchableOpacity
+          style={[styles.btnAccept, { backgroundColor: "#333", marginTop: 10 }]}
+          onPress={() => {
+            setShowQr(false);
+            setQrScanned(false);
+            setQrRaw(null);
+            setQrAnalysis(null);
+          }}
+        >
+          <Text style={styles.btnAcceptText}>Cerrar</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
 
   // ---- Pantalla PRINCIPAL (login + foto perfil + botones) ----
   return (
@@ -477,4 +480,13 @@ const styles = StyleSheet.create({
     color: "#d1d5db",
     fontSize: 12,
   },
+  qrScroll: {
+  flexGrow: 0,
+  paddingHorizontal: 16,
+  maxHeight: "40%",   // la parte de abajo ocupa ~40% de la pantalla
+},
+qrScrollContent: {
+  paddingBottom: 20,
+},
+
 });
