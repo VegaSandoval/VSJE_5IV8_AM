@@ -10,6 +10,7 @@ import {
   Alert,
   SafeAreaView,
   ScrollView, 
+  Linking,  
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Sharing from "expo-sharing";
@@ -144,6 +145,42 @@ const analyzeQrData = (raw) => {
   return result;
 };
 
+const handleOpenQrLink = async () => {
+  if (!qrAnalysis || !qrAnalysis.isUrl || !qrRaw) {
+    Alert.alert("No es un enlace", "El código QR no contiene un enlace web.");
+    return;
+  }
+
+  const url = qrAnalysis.raw.trim();
+
+  try {
+    const supported = await Linking.canOpenURL(url);
+    if (!supported) {
+      Alert.alert(
+        "No se puede abrir",
+        "El enlace parece no ser válido o este dispositivo no puede abrirlo."
+      );
+      return;
+    }
+
+    Alert.alert(
+      "Abrir enlace externo",
+      "¿Quieres abrir este enlace en el navegador?\n\n" + url,
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: "Abrir", onPress: () => Linking.openURL(url) },
+      ]
+    );
+  } catch (error) {
+    console.log(error);
+    Alert.alert(
+      "Error",
+      "Ocurrió un problema al intentar abrir el enlace."
+    );
+  }
+};
+
+
 
   const handleQrScanned = ({ data }) => {
     setQrScanned(true);
@@ -239,6 +276,18 @@ if (showQr) {
             </Text>
           </View>
         )}
+
+        {qrAnalysis && qrAnalysis.isUrl && (
+  <TouchableOpacity
+    style={[
+      styles.btnAccept,
+      { marginTop: 10, backgroundColor: "#16a34a" }, // verde
+    ]}
+    onPress={handleOpenQrLink}
+  >
+    <Text style={styles.btnAcceptText}>Abrir enlace</Text>
+  </TouchableOpacity>
+)}
 
         {qrScanned && (
           <TouchableOpacity
